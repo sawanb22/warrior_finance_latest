@@ -27,6 +27,24 @@ const farmData = [
     name1: "SHLD",
     name2: "LORE",
   },
+  {
+    icon1: group814,
+    icon2: group814,
+    name1: "SHLD",
+    name2: "LORE",
+  },
+  {
+    icon1: group814,
+    icon2: group814,
+    name1: "SHLD",
+    name2: "LORE",
+  },
+  {
+    icon1: group814,
+    icon2: group814,
+    name1: "SHLD",
+    name2: "LORE",
+  },
 ];
 
 function FarmCard({
@@ -239,6 +257,33 @@ export const Farms = () => {
 
       {/* PAGE CONTENT */}
       <div className="relative z-10 w-full max-w-[1085px] px-6">
+        <div className="w-[90%] h-[71px] mx-auto rounded-[34px] bg-[#FFEED6] px-5 sm:px-10 mb-6 sm:mb-8 flex items-center justify-between gap-5">
+          <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+            <span className="[font-family:'Sigmar',Helvetica] font-normal text-black text-[30px] leading-[1] tracking-[-0.04em]">
+              Total Rewards
+            </span>
+            <div className="w-[71px] h-[71px] rounded-full bg-[#eadbaf] border border-[#eadbaf] flex items-center justify-center overflow-hidden">
+              <Image
+                src={group814}
+                alt="reward token"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
+            </div>
+            <span className="[font-family:'Sigmar',Helvetica] font-normal text-black text-[30px] leading-[1] tracking-[-0.04em]">
+              0 SHLD
+            </span>
+          </div>
+
+          <button
+            className="w-[94.81px] h-[29px] rounded-[24px] bg-[#bfc0c4] [font-family:var(--font-poppins)] font-bold text-[14px] leading-none tracking-[-0.04em] text-white/85"
+            disabled
+          >
+            Claim All
+          </button>
+        </div>
+
         <div className="flex flex-col gap-4">
           {farmData.map((farm, i) => (
             <FarmCard
