@@ -18,11 +18,6 @@ export const Navigation = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    // Close menu on route change
-    useEffect(() => {
-        setMenuOpen(false);
-    }, [pathname]);
-
     // Close menu on outside click
     useEffect(() => {
         const handleClick = (e: MouseEvent) => {
@@ -50,14 +45,16 @@ export const Navigation = () => {
             <div className="flex items-center px-4 sm:px-6 md:px-10 lg:px-[80px] py-4 md:py-6">
                 {/* LEFT — Logo */}
                 <Link href="/" className="flex-shrink-0 z-50">
-                    <Image
-                        src="/dashboard-assets/Group 913.svg"
-                        alt="Warrior Finance Logo"
-                        width={88}
-                        height={88}
-                        className="h-[60px] w-[60px] md:h-[88px] md:w-[88px]"
-                        priority
-                    />
+                    <div className="flex h-[88.03662109375px] w-[88.03662109375px] items-center justify-center rounded-full border border-[rgba(240,240,240,0.27)]">
+                        <Image
+                            src="/dashboard-assets/Group 913.svg"
+                            alt="Warrior Finance Logo"
+                            width={88}
+                            height={88}
+                            className="h-[88.03662109375px] w-[88.03662109375px]"
+                            priority
+                        />
+                    </div>
                 </Link>
 
                 {/* Desktop Nav Links */}

@@ -9,10 +9,13 @@ export const Mint = () => {
         <div className="relative w-full min-h-screen bg-[#0f0114] overflow-x-hidden flex justify-center items-start pt-[130px] pb-20">
             {/* Background Image */}
             <div className="absolute top-0 left-0 w-full h-[875px] z-0 pointer-events-none">
-                <img
+                <Image
                     src="/dashboard-assets/50ec418b-ce96-451b-9b57-2fddcdbc51bf%201.png"
                     alt="Background"
-                    className="w-full h-full object-cover object-top opacity-100"
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-top opacity-100"
+                    priority
                 />
             </div>
 
@@ -27,7 +30,7 @@ export const Mint = () => {
                     <div className="relative bg-white border-2 border-[#381200] rounded-[17px] p-4 shadow-[0px_4px_0px_#381200] mb-5 h-[108px] flex flex-col justify-between">
                         <div className="flex justify-between items-start">
                             <span className="text-[28px] [font-family:var(--font-sigmar)] font-bold text-black leading-[118%] tracking-[-4%]">0.00</span>
-                            <div className="flex items-center gap-2 bg-[#ffeed6] border-2 border-[#381200] rounded-[13px] px-3 py-2 shadow-[0px_4px_0px_#381200] cursor-pointer hover:translate-y-0.5 active:translate-y-1 transition-all">
+                            <div className="flex items-center gap-2 bg-[#ffeed6] border-2 border-[#381200] rounded-[13px] px-3 py-2 cursor-pointer hover:translate-y-0.5 active:translate-y-1 transition-all">
                                 <div className="w-[25px] h-[25px] rounded-full overflow-hidden bg-[#200c15] flex items-center justify-center">
                                     <Image src={group927} alt="token" width={18} height={18} className="object-cover" />
                                 </div>
@@ -38,7 +41,7 @@ export const Mint = () => {
                             </div>
                         </div>
                         <div className="flex justify-between items-center">
-                            <button className="h-[32px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] px-3 text-white text-[12px] font-bold [font-family:var(--font-sigmar)] shadow-[0px_4px_0px_#309c04] active:translate-y-1 active:shadow-none transition-all uppercase tracking-wider flex items-center justify-center">
+                            <button className="h-[32px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] px-3 text-white text-[12px] font-bold [font-family:var(--font-sigmar)] transition-all uppercase tracking-wider flex items-center justify-center">
                                 Max
                             </button>
                             <div className="text-right flex items-center gap-2">
@@ -56,10 +59,10 @@ export const Mint = () => {
                         </div>
                     </div>
 
-                    <div className="relative bg-white border-2 border-[#381200] rounded-[17px] p-4 shadow-[0px_4px_0px_#381200] mb-5 h-[108px] flex flex-col justify-between">
+                    <div className="relative bg-white border-2 border-[#381200] rounded-[17px] p-4 mb-5 h-[108px] flex flex-col justify-between">
                         <div className="flex justify-between items-start">
                             <span className="text-[28px] [font-family:var(--font-sigmar)] font-bold text-black leading-[118%] tracking-[-4%]">0.00</span>
-                            <div className="flex items-center gap-2 bg-[#ffeed6] border-2 border-[#381200] rounded-[13px] px-3 py-2 shadow-[0px_4px_0px_#381200] cursor-pointer hover:translate-y-0.5 active:translate-y-1 transition-all">
+                            <div className="flex items-center gap-2 bg-[#ffeed6] border-2 border-[#381200] rounded-[13px] px-3 py-2 cursor-pointer hover:translate-y-0.5 active:translate-y-1 transition-all">
                                 <div className="w-[25px] h-[25px] rounded-full overflow-hidden bg-[#200c15] flex items-center justify-center">
                                     <Image src={group927} alt="token" width={25} height={25} className="w-full h-full object-cover" />
                                 </div>
@@ -70,7 +73,7 @@ export const Mint = () => {
                             </div>
                         </div>
                         <div className="flex justify-between items-center">
-                            <button className="h-[32px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] px-3 text-white text-[12px] font-bold [font-family:var(--font-sigmar)] shadow-[0px_4px_0px_#309c04] active:translate-y-1 active:shadow-none transition-all uppercase tracking-wider flex items-center justify-center">
+                            <button className="h-[32px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] px-3 text-white text-[12px] font-bold [font-family:var(--font-sigmar)] transition-all uppercase tracking-wider flex items-center justify-center">
                                 Max
                             </button>
                             <div className="text-right flex items-center gap-2">
@@ -96,7 +99,7 @@ export const Mint = () => {
                     <div className="mt-4 flex items-center justify-between px-1">
                         <span className="text-[14px] font-semibold [font-family:var(--font-poppins)] tracking-[2%] leading-[26px] text-black/60">Slippage</span>
                         <div className="flex gap-2.5">
-                            <button className="w-[62px] h-[34px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] shadow-[0px_4px_0px_#309c04] text-white text-[14px] font-semibold [font-family:var(--font-poppins)] tracking-[2%] leading-[100%] flex items-center justify-center transition-all hover:scale-105 active:translate-y-1 active:shadow-none">
+                            <button className="w-[62px] h-[34px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] text-white text-[14px] font-semibold [font-family:var(--font-poppins)] tracking-[2%] leading-[100%] flex items-center justify-center transition-all hover:scale-105">
                                 0.5%
                             </button>
                             <button className="w-[62px] h-[34px] bg-transparent border-2 border-[#309c04] rounded-[11px] text-[#309c04] text-[14px] font-semibold [font-family:var(--font-poppins)] tracking-[2%] leading-[100%] flex items-center justify-center transition-all hover:scale-105 active:translate-y-1">
@@ -108,7 +111,7 @@ export const Mint = () => {
                         </div>
                     </div>
 
-                    <button className="mt-auto w-full h-[52px] bg-[#62d732] border-2 border-[#309c04] rounded-[17px] text-white text-[18px] font-bold [font-family:var(--font-poppins)] shadow-[0px_4px_0px_#309c04] transition-all hover:translate-y-0.5 active:translate-y-2 active:shadow-none">
+                    <button className="mt-auto w-full h-[52px] bg-[#62d732] border-2 border-[#309c04] rounded-[17px] text-white text-[18px] font-bold [font-family:var(--font-poppins)] transition-all hover:translate-y-0.5">
                         Connect Wallet
                     </button>
                 </div>
