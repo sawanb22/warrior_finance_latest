@@ -145,7 +145,7 @@ function FarmCard({
                   <span className="[font-family:'Sigmar',Helvetica] font-normal text-black text-xs">79.61 WROR</span>
                 </div>
               </div>
-              <div className="bg-white border-2 border-[#381200] shadow-[0px_4px_0px_#381200] rounded-xl px-3 py-2.5">
+              <div className="bg-white border-2 border-[#381200] shadow-[0px_4px_0px_#381200] rounded-[17px] px-3 py-2.5">
                 <input
                   type="text"
                   placeholder="Enter Amount"
@@ -170,7 +170,7 @@ function FarmCard({
                   <span className="[font-family:'Sigmar',Helvetica] font-normal text-black text-xs">79.61 WROR</span>
                 </div>
               </div>
-              <div className="bg-white border-2 border-[#381200] shadow-[0px_4px_0px_#381200] rounded-xl px-3 py-2.5">
+              <div className="bg-white border-2 border-[#381200] shadow-[0px_4px_0px_#381200] rounded-[17px] px-3 py-2.5">
                 <input
                   type="text"
                   placeholder="Enter Amount"

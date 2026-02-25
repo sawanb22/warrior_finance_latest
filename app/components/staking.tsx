@@ -119,7 +119,7 @@ export const Staking = () => {
                                 <span className={sigmarText}>79.61 WROR</span>
                             </div>
 
-                            <div className="bg-white rounded-[14px] border-2 border-[#381200] shadow-[0px_4px_0px_#381200] h-[50px] w-full flex items-center px-4 mb-5 relative">
+                            <div className="bg-white rounded-[17px] border-2 border-[#381200] shadow-[0px_4px_0px_#381200] h-[50px] w-full flex items-center px-4 mb-5 relative">
                                 <input
                                     type="text"
                                     placeholder="Enter Amount"
@@ -156,7 +156,7 @@ export const Staking = () => {
                                 <span className={sigmarText}>79.61 WROR</span>
                             </div>
 
-                            <div className="bg-white rounded-[14px] border-2 border-[#381200] shadow-[0px_4px_0px_#381200] h-[50px] w-full flex items-center px-4 mb-5 relative">
+                            <div className="bg-white rounded-[17px] border-2 border-[#381200] shadow-[0px_4px_0px_#381200] h-[50px] w-full flex items-center px-4 mb-5 relative">
                                 <input
                                     type="text"
                                     placeholder="Enter Amount"
