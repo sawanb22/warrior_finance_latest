@@ -114,7 +114,7 @@ function FarmCard({
         {/* Collapse toggle */}
         <button
           onClick={() => setOpen((v) => !v)}
-          className="w-[46px] h-[46px] shrink-0 bg-[#62d732] border-[2.5px] border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-[14px] flex items-center justify-center active:translate-y-0.5 active:shadow-none transition-all ml-auto lg:ml-0"
+          className="w-[46px] h-[46px] shrink-0 bg-[#62d732] border-[2.5px] border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-[17px] flex items-center justify-center active:translate-y-0.5 active:shadow-none transition-all ml-auto lg:ml-0"
         >
           {open ? (
             <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -152,7 +152,7 @@ function FarmCard({
                   className="w-full bg-transparent [font-family:'Sigmar',Helvetica] font-normal text-black text-sm placeholder:text-black placeholder:opacity-50 outline-none"
                 />
               </div>
-              <button className="w-full bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-xl py-2.5 [font-family:'Poppins',Helvetica] font-bold text-white text-sm active:translate-y-0.5 active:shadow-none transition-all">
+              <button className="w-full bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-[17px] py-2.5 [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em] active:translate-y-0.5 active:shadow-none transition-all">
                 Connect Wallet
               </button>
             </div>
@@ -177,7 +177,7 @@ function FarmCard({
                   className="w-full bg-transparent [font-family:'Sigmar',Helvetica] font-normal text-black text-sm placeholder:text-black placeholder:opacity-50 outline-none"
                 />
               </div>
-              <button className="w-full bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-xl py-2.5 [font-family:'Poppins',Helvetica] font-bold text-white text-sm active:translate-y-0.5 active:shadow-none transition-all">
+              <button className="w-full bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-[17px] py-2.5 [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em] active:translate-y-0.5 active:shadow-none transition-all">
                 Connect Wallet
               </button>
             </div>
@@ -210,7 +210,7 @@ function FarmCard({
                   <span className="[font-family:'Sigmar',Helvetica] font-normal text-black text-xl leading-none">79.61</span>
                   <span className="[font-family:'Sigmar',Helvetica] font-normal text-black text-xs opacity-50 mt-0.5">WROR</span>
                 </div>
-                <button className="ml-auto bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-xl px-5 py-2.5 [font-family:'Poppins',Helvetica] font-bold text-white text-sm active:translate-y-0.5 active:shadow-none transition-all">
+                <button className="ml-auto bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-[17px] px-5 py-2.5 [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em] active:translate-y-0.5 active:shadow-none transition-all">
                   Claim
                 </button>
               </div>

@@ -47,7 +47,7 @@ export const Box = ({ onClose }: { onClose?: () => void }) => {
                     </div>
                     {/* Max / Balance row */}
                     <div className="flex items-center justify-between">
-                        <button className="bg-[#62d732] border-2 border-[#309c03] rounded-[11px] px-4 py-0.5 [font-family:'Poppins',Helvetica] font-semibold text-white text-sm">
+                        <button className="bg-[#62d732] border-2 border-[#309c03] rounded-[17px] px-4 py-0.5 [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em]">
                             Max
                         </button>
                         <div className="flex items-center gap-2">
@@ -161,20 +161,20 @@ export const Box = ({ onClose }: { onClose?: () => void }) => {
                         Slippage
                     </span>
                     <div className="flex items-center gap-2">
-                        <button className="bg-[#62d732] border-2 border-[#309c03] rounded-[11px] px-4 py-1 [font-family:'Poppins',Helvetica] font-semibold text-white text-sm">
+                        <button className="bg-[#62d732] border-2 border-[#309c03] rounded-[17px] px-4 py-1 [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em]">
                             0.5%
                         </button>
-                        <button className="border-2 border-[#309c03] rounded-[11px] px-4 py-1 [font-family:'Poppins',Helvetica] font-semibold text-[#626262] text-sm">
+                        <button className="border-2 border-[#309c03] rounded-[17px] px-4 py-1 [font-family:var(--font-poppins)] font-bold text-[#626262] text-[14px] leading-[1.02] tracking-[-0.04em]">
                             0.5%
                         </button>
-                        <button className="border-2 border-[#309c03] rounded-[11px] px-4 py-1 [font-family:'Poppins',Helvetica] font-semibold text-[#626262] text-sm">
+                        <button className="border-2 border-[#309c03] rounded-[17px] px-4 py-1 [font-family:var(--font-poppins)] font-bold text-[#626262] text-[14px] leading-[1.02] tracking-[-0.04em]">
                             0.5%
                         </button>
                     </div>
                 </div>
 
                 {/* ── Approve button ── */}
-                <button className="w-full bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] rounded-[17px] py-3 [font-family:'Poppins',Helvetica] font-bold text-white text-sm tracking-[-0.56px] active:translate-y-0.5 active:shadow-none transition-all">
+                <button className="w-full bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] rounded-[17px] py-3 [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em] active:translate-y-0.5 active:shadow-none transition-all">
                     Approve
                 </button>
             </div>

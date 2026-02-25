@@ -13,10 +13,10 @@ export const HeroSection = () => {
 
             {/* Buttons Row */}
             <div className="flex gap-4 ml-[24px]">
-                <button className="w-[151px] h-[46px] bg-[#62d732] rounded-[24px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-[#000000] font-['Poppins-Bold',Helvetica] font-bold text-sm tracking-[0] hover:brightness-110 active:translate-y-[2px] active:shadow-[0px_2px_0px_#309c04] transition-all">
+                <button className="w-[151px] h-[46px] bg-[#62d732] rounded-[17px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-[#000000] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:brightness-110 active:translate-y-[2px] active:shadow-[0px_2px_0px_#309c04] transition-all">
                     Connect Wallet
                 </button>
-                <button className="w-[151px] h-[46px] bg-[#ffeed6] rounded-[24px] border-2 border-[#1a1b1e] shadow-[0px_4px_0px_#1a1b1e] text-[#000000] font-['Poppins-Bold',Helvetica] font-bold text-sm tracking-[0] hover:brightness-110 active:translate-y-[2px] active:shadow-[0px_2px_0px_#1a1b1e] transition-all">
+                <button className="w-[151px] h-[46px] bg-[#ffeed6] rounded-[17px] border-2 border-[#1a1b1e] shadow-[0px_4px_0px_#1a1b1e] text-[#000000] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:brightness-110 active:translate-y-[2px] active:shadow-[0px_2px_0px_#1a1b1e] transition-all">
                     Learn More
                 </button>
             </div>

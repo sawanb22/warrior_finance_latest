@@ -112,7 +112,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({
                 {/* ── Row 3: MetaMask button + Mint + Buy WETH now ── */}
                 <div className="flex items-center gap-3">
                     {/* + MetaMask — fixed width */}
-                    <button className="h-[46px] w-[72px] flex items-center justify-center gap-1.5 rounded-[14px] border-2 border-[#309c04] bg-transparent hover:bg-[#62d732]/10 transition-all flex-shrink-0">
+                    <button className="h-[46px] w-[72px] flex items-center justify-center gap-1.5 rounded-[17px] border-2 border-[#309c04] bg-transparent hover:bg-[#62d732]/10 transition-all flex-shrink-0">
                         <span className="[font-family:var(--font-poppins)] font-bold text-[#309c04] text-[16px] leading-none">+</span>
                         <img src="/dashboard-assets/3855a550d66343e77f4059d956c760a88c5913fb.png" alt="MetaMask" className="object-contain" style={{ width: '29px', height: '24px' }} />
                     </button>
@@ -122,16 +122,16 @@ export const TokenCard: React.FC<TokenCardProps> = ({
 
                     {/* Mint — fixed 69×46 per design */}
                     <button
-                        className="bg-[#62d732] rounded-[14px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-white hover:brightness-110 active:translate-y-[2px] active:shadow-none transition-all flex-shrink-0"
-                        style={{ width: '69px', height: '46px', fontFamily: 'var(--font-poppins)', fontWeight: 700, fontSize: '15px' }}
+                        className="bg-[#62d732] rounded-[17px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-white hover:brightness-110 active:translate-y-[2px] active:shadow-none transition-all flex-shrink-0"
+                        style={{ width: '69px', height: '46px', fontFamily: 'var(--font-poppins)', fontWeight: 700, fontSize: '14px', lineHeight: '102%', letterSpacing: '-0.04em' }}
                     >
                         Mint
                     </button>
 
                     {/* Buy WETH now — fixed 150×46 per design */}
                     <button
-                        className="bg-[#62d732] rounded-[14px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-white hover:brightness-110 active:translate-y-[2px] active:shadow-none transition-all flex-shrink-0"
-                        style={{ width: '150px', height: '46px', fontFamily: 'var(--font-poppins)', fontWeight: 700, fontSize: '15px' }}
+                        className="bg-[#62d732] rounded-[17px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-white hover:brightness-110 active:translate-y-[2px] active:shadow-none transition-all flex-shrink-0"
+                        style={{ width: '150px', height: '46px', fontFamily: 'var(--font-poppins)', fontWeight: 700, fontSize: '14px', lineHeight: '102%', letterSpacing: '-0.04em' }}
                     >
                         Buy WETH now
                     </button>

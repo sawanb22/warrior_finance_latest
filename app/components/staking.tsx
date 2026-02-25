@@ -53,8 +53,8 @@ export const Staking = () => {
                                                 <path d="M12 11V16" stroke="black" strokeWidth="2" strokeLinecap="round" />
                                                 <circle cx="12" cy="8" r="1.5" fill="black" />
                                             </svg>
-                                            <button className="bg-[#62d732] border-2 border-[#309C04] shadow-[0px_4px_0px_#309C04] rounded-[14px] px-6 py-[6px] active:translate-y-1 active:shadow-none transition-all">
-                                                <span className="font-poppins font-bold text-white text-[14px] tracking-[-0.04em]">Claim</span>
+                                            <button className="bg-[#62d732] border-2 border-[#309C04] shadow-[0px_4px_0px_#309C04] rounded-[17px] px-6 py-[6px] [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em] active:translate-y-1 active:shadow-none transition-all">
+                                                <span>Claim</span>
                                             </button>
                                         </div>
                                     </div>
@@ -130,8 +130,8 @@ export const Staking = () => {
                                 </div>
                             </div>
 
-                            <button className="bg-[#62D732] border-2 border-[#309C04] shadow-[0px_4px_0px_0px_#309C04] rounded-[14px] h-[50px] w-full flex items-center justify-center active:translate-y-1 active:shadow-[0px_0px_0px_0px_#309C04] transition-all mt-2">
-                                <span className="font-poppins font-bold text-white text-[14px] tracking-[-0.04em]">Connect Wallet</span>
+                            <button className="bg-[#62D732] border-2 border-[#309C04] shadow-[0px_4px_0px_0px_#309C04] rounded-[17px] h-[50px] w-full flex items-center justify-center [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em] active:translate-y-1 active:shadow-[0px_0px_0px_0px_#309C04] transition-all mt-2">
+                                <span>Connect Wallet</span>
                             </button>
                         </div>
 
@@ -167,8 +167,8 @@ export const Staking = () => {
                                 </div>
                             </div>
 
-                            <button className="bg-[#62D732] border-2 border-[#309C04] shadow-[0px_4px_0px_0px_#309C04] rounded-[14px] h-[50px] w-full flex items-center justify-center active:translate-y-1 active:shadow-[0px_0px_0px_0px_#309C04] transition-all mt-2">
-                                <span className="font-poppins font-bold text-white text-[14px] tracking-[-0.04em]">Connect Wallet</span>
+                            <button className="bg-[#62D732] border-2 border-[#309C04] shadow-[0px_4px_0px_0px_#309C04] rounded-[17px] h-[50px] w-full flex items-center justify-center [font-family:var(--font-poppins)] font-bold text-white text-[14px] leading-[1.02] tracking-[-0.04em] active:translate-y-1 active:shadow-[0px_0px_0px_0px_#309C04] transition-all mt-2">
+                                <span>Connect Wallet</span>
                             </button>
                         </div>
                     </div>

@@ -41,7 +41,7 @@ export const Mint = () => {
                             </div>
                         </div>
                         <div className="flex justify-between items-center">
-                            <button className="h-[32px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] px-3 text-white text-[12px] font-bold [font-family:var(--font-sigmar)] transition-all uppercase tracking-wider flex items-center justify-center">
+                            <button className="h-[32px] bg-[#62d732] border-2 border-[#309c04] rounded-[17px] px-3 text-white text-[14px] [font-family:var(--font-poppins)] font-bold leading-[1.02] tracking-[-0.04em] transition-all uppercase flex items-center justify-center">
                                 Max
                             </button>
                             <div className="text-right flex items-center gap-2">
@@ -73,7 +73,7 @@ export const Mint = () => {
                             </div>
                         </div>
                         <div className="flex justify-between items-center">
-                            <button className="h-[32px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] px-3 text-white text-[12px] font-bold [font-family:var(--font-sigmar)] transition-all uppercase tracking-wider flex items-center justify-center">
+                            <button className="h-[32px] bg-[#62d732] border-2 border-[#309c04] rounded-[17px] px-3 text-white text-[14px] [font-family:var(--font-poppins)] font-bold leading-[1.02] tracking-[-0.04em] transition-all uppercase flex items-center justify-center">
                                 Max
                             </button>
                             <div className="text-right flex items-center gap-2">
@@ -99,19 +99,19 @@ export const Mint = () => {
                     <div className="mt-4 flex items-center justify-between px-1">
                         <span className="text-[14px] font-semibold [font-family:var(--font-poppins)] tracking-[2%] leading-[26px] text-black/60">Slippage</span>
                         <div className="flex gap-2.5">
-                            <button className="w-[62px] h-[34px] bg-[#62d732] border-2 border-[#309c04] rounded-[11px] text-white text-[14px] font-semibold [font-family:var(--font-poppins)] tracking-[2%] leading-[100%] flex items-center justify-center transition-all hover:scale-105">
+                            <button className="w-[62px] h-[34px] bg-[#62d732] border-2 border-[#309c04] rounded-[17px] text-white text-[14px] [font-family:var(--font-poppins)] font-bold leading-[1.02] tracking-[-0.04em] flex items-center justify-center transition-all hover:scale-105">
                                 0.5%
                             </button>
-                            <button className="w-[62px] h-[34px] bg-transparent border-2 border-[#309c04] rounded-[11px] text-[#309c04] text-[14px] font-semibold [font-family:var(--font-poppins)] tracking-[2%] leading-[100%] flex items-center justify-center transition-all hover:scale-105 active:translate-y-1">
+                            <button className="w-[62px] h-[34px] bg-transparent border-2 border-[#309c04] rounded-[17px] text-[#309c04] text-[14px] [font-family:var(--font-poppins)] font-bold leading-[1.02] tracking-[-0.04em] flex items-center justify-center transition-all hover:scale-105 active:translate-y-1">
                                 0.5%
                             </button>
-                            <button className="w-[62px] h-[34px] bg-transparent border-2 border-[#309c04] rounded-[11px] text-[#309c04] text-[14px] font-semibold [font-family:var(--font-poppins)] tracking-[2%] leading-[100%] flex items-center justify-center transition-all hover:scale-105 active:translate-y-1">
+                            <button className="w-[62px] h-[34px] bg-transparent border-2 border-[#309c04] rounded-[17px] text-[#309c04] text-[14px] [font-family:var(--font-poppins)] font-bold leading-[1.02] tracking-[-0.04em] flex items-center justify-center transition-all hover:scale-105 active:translate-y-1">
                                 0.5%
                             </button>
                         </div>
                     </div>
 
-                    <button className="mt-auto w-full h-[52px] bg-[#62d732] border-2 border-[#309c04] rounded-[17px] text-white text-[18px] font-bold [font-family:var(--font-poppins)] transition-all hover:translate-y-0.5">
+                    <button className="mt-auto w-full h-[52px] bg-[#62d732] border-2 border-[#309c04] rounded-[17px] text-white text-[14px] [font-family:var(--font-poppins)] font-bold leading-[1.02] tracking-[-0.04em] transition-all hover:translate-y-0.5">
                         Connect Wallet
                     </button>
                 </div>
