@@ -11,7 +11,7 @@ import { CollateralCard } from './dashboard/CollateralCard';
 
 export const Dashboard = () => {
     return (
-        <div className="min-h-screen bg-[#0f0114] text-white overflow-x-hidden font-sans relative">
+        <div className="min-h-screen bg-transparent text-white overflow-x-hidden font-sans relative">
 
             {/* ── SCROLLING STRIP ── plain #F0DDC0 bar, 1760.98×45.13px, rotated corner-to-corner ── */}
             <div
@@ -87,13 +87,6 @@ export const Dashboard = () => {
 
             {/* ── HERO SECTION ── full viewport width, background only here ── */}
             <section className="relative w-full overflow-hidden min-h-[600px] lg:h-[875px]">
-
-                {/* Background Image – covers hero section only */}
-                <img
-                    src="/dashboard-assets/50ec418b-ce96-451b-9b57-2fddcdbc51bf 1.png"
-                    alt="Background"
-                    className="absolute inset-0 w-full h-full object-cover z-0"
-                />
 
                 {/* Content wrapper – centred, matches 1440px grid */}
                 <div className="relative z-20 w-full max-w-[1440px] mx-auto h-full flex flex-col lg:block items-center justify-between gap-12 py-10 lg:py-0">
