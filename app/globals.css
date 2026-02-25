@@ -10,6 +10,15 @@
     --animate-spin: spin 1s linear infinite;
 }
 
+html,
+body {
+    min-height: 100%;
+}
+
+html {
+    overflow-y: scroll;
+}
+
 .app-fixed-bg {
     position: fixed;
     inset: 0;
