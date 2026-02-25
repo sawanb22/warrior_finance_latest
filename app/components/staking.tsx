@@ -1,21 +1,11 @@
 "use client";
 
-import Image from "next/image";
-
 export const Staking = () => {
     // Exact Sigmar typography from design specs: 16px, 400 weight (font-normal), 111% line-height
     const sigmarText = "text-black font-normal text-[16px] leading-[1.11] [font-family:var(--font-sigmar)]";
 
     return (
-        <div className="relative w-full min-h-screen bg-[#0f0114] overflow-x-hidden flex justify-center items-start pt-[130px] pb-20">
-            {/* Background Image */}
-            <div className="absolute top-0 left-0 w-full h-[875px] z-0 pointer-events-none">
-                <img
-                    src="/dashboard-assets/50ec418b-ce96-451b-9b57-2fddcdbc51bf%201.png"
-                    alt="Background"
-                    className="w-full h-full object-cover object-top opacity-100"
-                />
-            </div>
+        <div className="relative w-full min-h-screen bg-transparent overflow-x-hidden flex justify-center items-start pt-[130px] pb-20">
 
             {/* Content Container */}
             <div className="relative z-10 w-full max-w-[1200px] px-4 sm:px-6 lg:px-8">

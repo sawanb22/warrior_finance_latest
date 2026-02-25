@@ -10,6 +10,17 @@
     --animate-spin: spin 1s linear infinite;
 }
 
+.app-fixed-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url('/dashboard-assets/50ec418b-ce96-451b-9b57-2fddcdbc51bf%201.png');
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+
 .animate-fade-in {
     animation: fade-in 1s var(--animation-delay, 0s) ease forwards;
 }

@@ -7,18 +7,7 @@ const group927 = "/dashboard-assets/Group 927.svg";
 
 export const Redeem = () => {
     return (
-        <div className="relative w-full min-h-screen bg-[#0f0114] overflow-x-hidden flex justify-center items-start pt-[130px] pb-20">
-            {/* Background Image */}
-            <div className="absolute top-0 left-0 w-full h-[875px] z-0 pointer-events-none">
-                <Image
-                    src="/dashboard-assets/50ec418b-ce96-451b-9b57-2fddcdbc51bf%201.png"
-                    alt="Background"
-                    fill
-                    sizes="100vw"
-                    className="object-cover object-top opacity-100"
-                    priority
-                />
-            </div>
+        <div className="relative w-full min-h-screen bg-transparent overflow-x-hidden flex justify-center items-start pt-[130px] pb-20">
 
             {/* Main Redeem Card */}
             <div className="relative w-full max-w-[472px] z-10 px-4">
