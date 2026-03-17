@@ -52,7 +52,7 @@ export const useProtocolData = () => {
             // [17] GUARDX ERC20 totalSupply → GUARDX circulating supply
             { address: addresses.GUARDX as `0x${string}`, abi: TOKEN_ABI, functionName: 'totalSupply' },
             // [18] GUARDX spot price from BNB_GUARD_ORACLE
-            { address: addresses.BNB_GUARD_ORACLE as `0x${string}`, abi: IUniswapOracle, functionName: 'spot', args: [addresses.GUARD, 1000000000000000000n] },
+            { address: addresses.BNB_GUARD_ORACLE as `0x${string}`, abi: IUniswapOracle, functionName: 'spot', args: [addresses.GUARD, BigInt("1000000000000000000")] },
         ]
     });
 
