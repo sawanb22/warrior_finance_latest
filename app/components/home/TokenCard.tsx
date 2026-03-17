@@ -129,8 +129,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({
                         <img
                             src={activeData.logoSrc}
                             alt={activeData.tokenName}
-                            className={`w-[72px] h-[72px] object-contain flex-shrink-0 ${hasOptions ? 'bg-black rounded-full' : ''}`}
-                            style={hasOptions && activeData.logoSrc === '/icons/guard.png' ? { padding: '8px' } : {}}
+                            className={`w-[72px] h-[72px] object-contain flex-shrink-0 ${hasOptions ? 'bg-black rounded-full p-2' : ''}`}
                         />
                         <div className="flex flex-col">
                             <div className="flex items-center gap-2">
@@ -157,7 +156,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({
                                         className="flex items-center gap-3 px-4 py-3 hover:bg-[#F1DDC1] cursor-pointer"
                                         onClick={() => setSelectedOptionIndex(idx)}
                                     >
-                                        <img src={opt.logoSrc} alt={opt.tokenName} className="w-[42px] h-[42px] object-contain bg-black rounded-full" style={opt.logoSrc === '/icons/guard.png' ? { padding: '6px' } : {}} />
+                                        <img src={opt.logoSrc} alt={opt.tokenName} className="w-[42px] h-[42px] object-contain bg-black rounded-full p-1" />
                                         <span className={sigmarVal} style={{ fontSize: '18px' }}>{opt.tokenName}</span>
                                     </div>
                                 ))}
