@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import Link from 'next/link';
 import { useProtocolData } from '../../hooks/useProtocolData';
 
 export const MascotPlaceholder = () => (
@@ -55,25 +55,27 @@ export const StatsBoard = () => {
 
                 {/* Buttons */}
                 <div className="flex gap-3" style={{ marginTop: '4.5px', width: '100%', justifyContent: 'center', marginLeft: '-7px' }}>
-                    <button style={{
-                        width: '151px',
-                        height: '46px',
-                        fontFamily: 'Poppins, sans-serif',
-                        fontWeight: 700,
-                        fontSize: '14px',
-                        lineHeight: '102%',
-                        letterSpacing: '-0.04em',
-                        color: '#ffffff',
-                        background: '#62d732',
-                        border: '2px solid #309c03',
-                        borderRadius: '17px',
-                        boxShadow: '0px 4px 0px #309c04',
-                        cursor: 'pointer',
-                        transition: 'all 0.15s',
-                        flexShrink: 0,
-                    }}>
-                        Lock Yours
-                    </button>
+                    <Link href="/lock" className="no-underline">
+                        <button style={{
+                            width: '151px',
+                            height: '46px',
+                            fontFamily: 'Poppins, sans-serif',
+                            fontWeight: 700,
+                            fontSize: '14px',
+                            lineHeight: '102%',
+                            letterSpacing: '-0.04em',
+                            color: '#ffffff',
+                            background: '#62d732',
+                            border: '2px solid #309c03',
+                            borderRadius: '17px',
+                            boxShadow: '0px 4px 0px #309c04',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s',
+                            flexShrink: 0,
+                        }}>
+                            Lock Yours
+                        </button>
+                    </Link>
                     <button style={{
                         width: '151px',
                         height: '46px',

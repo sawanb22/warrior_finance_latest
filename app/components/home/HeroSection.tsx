@@ -1,4 +1,4 @@
-import React from 'react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export const HeroSection = () => {
     return (
@@ -13,9 +13,37 @@ export const HeroSection = () => {
 
             {/* Buttons Row */}
             <div className="flex gap-4 ml-[24px]">
-                <button className="w-[151px] h-[46px] bg-[#62d732] rounded-[17px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-[#000000] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:brightness-110 active:translate-y-[2px] active:shadow-[0px_2px_0px_#309c04] transition-all">
-                    Connect Wallet
-                </button>
+                <ConnectButton.Custom>
+                    {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
+                        const connected = mounted && account && chain;
+                        return (
+                            <div aria-hidden={!mounted} style={{ opacity: mounted ? 1 : 0, pointerEvents: mounted ? 'auto' : 'none' }}>
+                                {!connected ? (
+                                    <button
+                                        onClick={openConnectModal}
+                                        className="w-[151px] h-[46px] bg-[#62d732] rounded-[17px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-[#000000] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:brightness-110 active:translate-y-[2px] active:shadow-[0px_2px_0px_#309c04] transition-all"
+                                    >
+                                        Connect Wallet
+                                    </button>
+                                ) : chain.unsupported ? (
+                                    <button
+                                        onClick={openChainModal}
+                                        className="w-[151px] h-[46px] bg-[#e84040] rounded-[17px] border-2 border-[#c03304] shadow-[0px_4px_0px_0px_#c03304] text-white [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#d13333] transition-all active:translate-y-1 active:shadow-none"
+                                    >
+                                        Wrong Network
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={openAccountModal}
+                                        className="w-[151px] h-[46px] bg-[#62d732] rounded-[17px] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c04] text-[#000000] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:brightness-110 active:translate-y-[2px] active:shadow-[0px_2px_0px_#309c04] transition-all"
+                                    >
+                                        {account.displayName}
+                                    </button>
+                                )}
+                            </div>
+                        );
+                    }}
+                </ConnectButton.Custom>
                 <button className="w-[151px] h-[46px] bg-[#ffeed6] rounded-[17px] border-2 border-[#1a1b1e] shadow-[0px_4px_0px_#1a1b1e] text-[#000000] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:brightness-110 active:translate-y-[2px] active:shadow-[0px_2px_0px_#1a1b1e] transition-all">
                     Learn More
                 </button>
