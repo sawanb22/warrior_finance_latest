@@ -1,5 +1,5 @@
 "use client";
-import Link from 'next/link';
+import React from 'react';
 import { useProtocolData } from '../../hooks/useProtocolData';
 
 export const MascotPlaceholder = () => (
@@ -55,8 +55,9 @@ export const StatsBoard = () => {
 
                 {/* Buttons */}
                 <div className="flex gap-3" style={{ marginTop: '4.5px', width: '100%', justifyContent: 'center', marginLeft: '-7px' }}>
-                    <Link href="/lock" className="no-underline">
-                        <button style={{
+                    <button 
+                        onClick={() => window.location.href = '/lock'}
+                        style={{
                             width: '151px',
                             height: '46px',
                             fontFamily: 'Poppins, sans-serif',
@@ -72,10 +73,10 @@ export const StatsBoard = () => {
                             cursor: 'pointer',
                             transition: 'all 0.15s',
                             flexShrink: 0,
-                        }}>
-                            Lock Yours
-                        </button>
-                    </Link>
+                        }}
+                    >
+                        Lock Yours
+                    </button>
                     <button style={{
                         width: '151px',
                         height: '46px',
