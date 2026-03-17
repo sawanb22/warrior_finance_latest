@@ -1,155 +1,365 @@
 "use client";
 
-import React from 'react';
-import { HeroSection } from './dashboard/HeroSection';
-import { MascotPlaceholder, StatsBoard } from './dashboard/StatsBus';
-import { TokenCard } from './dashboard/TokenCard';
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { useAccount } from "wagmi";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { formatUnits } from "viem";
+import { useRouter } from "next/navigation";
+import { useStakingData } from "../hooks/useStakingData";
+import { useStakingActions } from "../hooks/useStakingActions";
 
-import { StakingInfo } from './dashboard/StakingInfo';
-import { CollateralCard } from './dashboard/CollateralCard';
+const logoIcon = "/dashboard-assets/Group 927.svg";
 
+const fmt = (n: number, d = 2) =>
+    isNaN(n) || !isFinite(n)
+        ? "0"
+        : n.toLocaleString("en-US", { maximumFractionDigits: d });
+
+const calcRemaining = (epoch: number) => {
+    const left = epoch - Math.floor(Date.now() / 1000);
+    if (left <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    return {
+        days: Math.floor(left / 86400),
+        hours: Math.floor((left % 86400) / 3600),
+        minutes: Math.floor((left % 3600) / 60),
+        seconds: left % 60,
+    };
+};
+
+const sigmar = "[font-family:'Sigmar',Helvetica] font-normal";
+const poppins = "[font-family:'Poppins',Helvetica]";
+
+const greenBtn =
+    "bg-[#62d732] border-2 border-[#309c03] shadow-[0px_4px_0px_#309c03] rounded-[14px] font-bold text-white active:translate-y-0.5 active:shadow-none transition-all disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2";
+
+const ShieldIcon = () => (
+    <div className="w-[38px] h-[38px] rounded-full bg-[#e8d5b0] border border-[#0000001a] overflow-hidden flex items-center justify-center shrink-0">
+        <Image src="/dashboard-assets/Group 927.svg" alt="SHiELD" width={26} height={26} />
+    </div>
+);
+
+const BnbIcon = () => (
+    <div className="w-[38px] h-[38px] rounded-full bg-[#f0b90b] flex items-center justify-center shrink-0 border border-[#c88f00]">
+        <span className="text-white text-[16px] font-extrabold leading-none">B</span>
+    </div>
+);
+
+function useCountdowns(entries: { unlockTime: bigint }[]) {
+    const [times, setTimes] = useState<ReturnType<typeof calcRemaining>[]>([]);
+
+    // Serialize entry values to avoid infinite loops when array references change
+    const serializedEntries = entries.map(e => e.unlockTime.toString()).join(',');
+
+    useEffect(() => {
+        const update = () =>
+            setTimes(entries.map((e) => calcRemaining(Number(e.unlockTime))));
+        update();
+        const id = setInterval(update, 1000);
+        return () => clearInterval(id);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [serializedEntries]);
+    return times;
+}
 
 export const Dashboard = () => {
-    return (
-        <div className="min-h-screen bg-transparent text-white overflow-x-hidden font-sans relative">
+    const { isConnected } = useAccount();
+    const { openConnectModal } = useConnectModal();
+    const router = useRouter();
 
-            {/* ── SCROLLING STRIP ── plain #F0DDC0 bar, 1760.98×45.13px, rotated corner-to-corner ── */}
-            <div
-                className="absolute z-10 pointer-events-none"
-                style={{
-                    /* Exact design dimensions - narrowed by another 3px (1.5px from both sides) */
-                    width: '1760.98px',
-                    height: '45.13px',
-                    background: '#F0DDC0',
-                    /* Position: centered horizontally so it overhangs both sides equally */
-                    top: '146px',                /* vertical midpoint so it straddles the navbar bottom */
-                    left: 'calc(50% - 880.49px)',/* center of 1760.98 = 880.49 */
-                    /* Rotate so it cuts diagonally: right side higher, left side lower */
-                    transform: 'rotate(-3.26deg)',
-                    transformOrigin: 'center center',
-                    overflow: 'hidden',
-                    /* Inset shadows for beveled look */
-                    boxShadow: '0px -4px 0px 0px #FFEE60 inset, 0px 4px 0px 0px #00000040 inset',
-                }}
-            >
-                {/* Scrolling text — vertically centered inside the bar */}
-                <div className="absolute inset-0 flex items-center overflow-hidden">
-                    <div className="animate-marquee-strip flex items-center shrink-0 whitespace-nowrap">
-                        {/* Copy 1 */}
-                        {[...Array(6)].map((_, i) => (
-                            <div key={`a-${i}`} className="flex items-center gap-5 px-6">
-                                <img
-                                    src="/dashboard-assets/Group 913.svg"
-                                    alt="Warrior Finance"
-                                    className="h-8 w-auto shrink-0"
-                                />
-                                <span
-                                    style={{
-                                        fontFamily: 'Sigmar, cursive',
-                                        fontWeight: 400,
-                                        fontSize: '20px',
-                                        lineHeight: '84%',
-                                        letterSpacing: '-0.04em',
-                                        color: '#5D1D2D',
-                                        whiteSpace: 'nowrap',
-                                    }}
-                                >
-                                    The Real Warrior of Finance
-                                </span>
-                            </div>
-                        ))}
-                        {/* Copy 2 — seamless loop */}
-                        {[...Array(6)].map((_, i) => (
-                            <div key={`b-${i}`} aria-hidden className="flex items-center gap-5 px-6">
-                                <img
-                                    src="/dashboard-assets/Group 913.svg"
-                                    alt=""
-                                    className="h-8 w-auto shrink-0"
-                                />
-                                <span
-                                    style={{
-                                        fontFamily: 'Sigmar, cursive',
-                                        fontWeight: 400,
-                                        fontSize: '20px',
-                                        lineHeight: '84%',
-                                        letterSpacing: '-0.04em',
-                                        color: '#5D1D2D',
-                                        whiteSpace: 'nowrap',
-                                    }}
-                                >
-                                    The Real Warrior of Finance
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+    const {
+        shieldPrice,
+        totalStakedSupply,
+        totalLockedSupply,
+        claimableShield,
+        claimableBnb,
+        withdrawableAmount,
+        earnedBalancesTotal,
+        earnedBalancesEntries,
+        lockedBalancesEntries,
+        unclaimedVesting,
+        userLockedUnlockable,
+        refetch,
+    } = useStakingData();
+
+    const {
+        claimRewards, isClaimLoading, isClaimSuccess,
+        emergencyWithdraw, isEmergencyWithdrawLoading, isEmergencyWithdrawSuccess,
+        withdrawExpiredVestings, isWithdrawExpiredVestingsLoading, isWithdrawExpiredVestingsSuccess,
+    } = useStakingActions();
+
+    useEffect(() => {
+        if (isClaimSuccess || isEmergencyWithdrawSuccess || isWithdrawExpiredVestingsSuccess) refetch();
+    }, [isClaimSuccess, isEmergencyWithdrawSuccess, isWithdrawExpiredVestingsSuccess]);
+
+    const vestingTimes = useCountdowns(earnedBalancesEntries);
+    const lockTimes = useCountdowns(lockedBalancesEntries);
+
+    const stakedUsd = totalStakedSupply * shieldPrice;
+    const lockedUsd = totalLockedSupply * shieldPrice;
+
+    const cardBase = "bg-[#ffeed6] rounded-[22px] border border-[#4100001a]";
+
+    /* Reward section: title on top, hint below it in small muted text */
+    const RewardSection = ({
+        title,
+        hint,
+        children,
+        noBorder = false,
+    }: {
+        title: string;
+        hint: string;
+        children: React.ReactNode;
+        noBorder?: boolean;
+    }) => (
+        <div className={`px-9 py-6 ${!noBorder ? "border-b border-[#4100001a]" : ""}`}>
+            {/* stacked: title then hint — no wrapping ever */}
+            <div className="mb-6">
+                <span className={`${poppins} text-black font-bold text-[19px]`}>{title}</span>
+                <p className={`${poppins} text-black/45 text-[14px] mt-1`}>{hint}</p>
             </div>
+            {children}
+        </div>
+    );
 
-            {/* ── HERO SECTION ── full viewport width, background only here ── */}
-            <section className="relative w-full overflow-hidden min-h-[600px] lg:h-[875px]">
 
-                {/* Content wrapper – centred, matches 1440px grid */}
-                <div className="relative z-20 w-full max-w-[1440px] mx-auto h-full flex flex-col lg:block items-center justify-between gap-12 py-10 lg:py-0">
+    return (
+        <div className="relative w-full min-h-screen flex justify-center items-start pt-[160px] pb-24 px-4 text-black">
+            <div className="relative z-10 w-full max-w-[1450px]">
+                <div className="flex flex-col lg:flex-row gap-8">
 
-                    {/* Left: Warriors Never Die */}
-                    <div className="w-full lg:absolute lg:left-[112px] lg:top-[329px] lg:w-[487px] lg:z-20 flex justify-center lg:block order-2 lg:order-none px-4 lg:px-0 pt-10 lg:pt-0">
-                        <HeroSection />
+                    {/* ══════════════ LEFT COLUMN ══════════════ */}
+                    <div className="flex-1 min-w-0 flex flex-col gap-6">
+
+                        {/* Total Staked + Locked */}
+                        <div className="flex flex-col sm:flex-row gap-8">
+
+                            {/* TOTAL STAKED */}
+                            <div className={`${cardBase} p-9 flex-1`}>
+                                <div className="flex justify-between items-start mb-5">
+                                    <h2 className={`${sigmar} text-black text-[20px] leading-none`}>Total Staked</h2>
+                                    <span className="text-black/40 text-base cursor-help" title="Total SHIELD staked">ⓘ</span>
+                                </div>
+                                <div className="flex items-center gap-3 mb-1">
+                                    <ShieldIcon />
+                                    <span className={`${sigmar} text-black text-[34px] leading-none tracking-tight`}>
+                                        {fmt(totalStakedSupply)}
+                                    </span>
+                                    <span className={`${poppins} text-black/50 text-[14px] font-semibold self-end mb-1`}>
+                                        ${fmt(stakedUsd, 3)}
+                                    </span>
+                                </div>
+                                <p className={`${poppins} text-black/50 text-[13px] mb-7`}>Total SHiELD Staked</p>
+                                <button
+                                    className={`${greenBtn} py-[15px] w-full text-[16px]`}
+                                    onClick={() => router.push("/staking")}
+                                >
+                                    Stake More
+                                </button>
+                            </div>
+
+                            {/* TOTAL LOCKED */}
+                            <div className={`${cardBase} p-9 flex-1`}>
+                                <div className="flex justify-between items-start mb-5">
+                                    <h2 className={`${sigmar} text-black text-[20px] leading-none`}>Total Locked</h2>
+                                    <span className="text-black/40 text-base cursor-help" title="Total SHIELD locked">ⓘ</span>
+                                </div>
+                                <div className="flex items-center gap-3 mb-1">
+                                    <ShieldIcon />
+                                    <span className={`${sigmar} text-black text-[34px] leading-none tracking-tight`}>
+                                        {fmt(totalLockedSupply)}
+                                    </span>
+                                    <span className={`${poppins} text-black/50 text-[14px] font-semibold self-end mb-1`}>
+                                        ${fmt(lockedUsd, 3)}
+                                    </span>
+                                </div>
+                                <p className={`${poppins} text-black/50 text-[13px] mb-7`}>Total SHiELD Locked</p>
+                                <button
+                                    className={`${greenBtn} py-[15px] w-full text-[16px]`}
+                                    onClick={() => router.push("/lock")}
+                                >
+                                    Lock More
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* VESTING PANEL */}
+                        <div className={`${cardBase} p-9`}>
+                            <div className="flex justify-between items-center mb-5">
+                                <h2 className={`${sigmar} text-black text-[20px] leading-none`}>Vesting</h2>
+                                <span className="text-black/40 text-base cursor-help" title="Farm claimable rewards currently vested">ⓘ</span>
+                            </div>
+                            <div className="min-h-[110px] max-h-[260px] overflow-y-auto space-y-2">
+                                {earnedBalancesEntries.length > 0 ? (
+                                    earnedBalancesEntries.map((entry, i) => {
+                                        const amt = Number(formatUnits(BigInt(entry.amount.toString()), 18));
+                                        const t = vestingTimes[i];
+                                        return (
+                                            <div key={i} className="bg-white/50 rounded-[14px] border border-[#4100001a] px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+                                                <div className="flex items-center gap-3">
+                                                    <ShieldIcon />
+                                                    <span className={`${sigmar} text-black text-[26px] leading-none`}>{fmt(amt)}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className={`${poppins} text-black/50 text-[12px]`}>Claimable in</span>
+                                                    <span className={`${sigmar} text-black text-[14px]`}>
+                                                        {t?.days || 0}D:{t?.hours || 0}H:{t?.minutes || 0}M:{t?.seconds || 0}S
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                ) : (
+                                    <div className="flex justify-center items-center h-[90px]">
+                                        <p className={`${poppins} text-black/40 text-[14px]`}>No Vestings Found</p>
+                                    </div>
+                                )}
+                            </div>
+                            {unclaimedVesting > 0 && (
+                                <div className="flex items-center justify-between mt-5 pt-5 border-t border-[#4100001a]">
+                                    <div className="flex items-center gap-3">
+                                        <span className={`${poppins} text-black text-[14px] font-semibold`}>Unclaimed Vesting</span>
+                                        <ShieldIcon />
+                                        <span className={`${sigmar} text-black text-[20px]`}>{fmt(unclaimedVesting)}</span>
+                                    </div>
+                                    <button
+                                        className={`${greenBtn} py-[11px] px-6 text-[15px]`}
+                                        disabled={isWithdrawExpiredVestingsLoading}
+                                        onClick={() => withdrawExpiredVestings()}
+                                    >
+                                        {isWithdrawExpiredVestingsLoading && (
+                                            <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                                        )}
+                                        Claim
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* LOCKED PANEL */}
+                        <div className={`${cardBase} p-9`}>
+                            <div className="flex justify-between items-center mb-5">
+                                <h2 className={`${sigmar} text-black text-[20px] leading-none`}>Locked</h2>
+                                <span className="text-black/40 text-base cursor-help" title="Locked tokens and their unlock dates">ⓘ</span>
+                            </div>
+                            <div className="min-h-[110px] max-h-[260px] overflow-y-auto space-y-2">
+                                {lockedBalancesEntries.length > 0 ? (
+                                    lockedBalancesEntries.map((entry, i) => {
+                                        const amt = Number(formatUnits(BigInt(entry.amount.toString()), 18));
+                                        const t = lockTimes[i];
+                                        return (
+                                            <div key={i} className="bg-white/50 rounded-[14px] border border-[#4100001a] px-5 py-3 flex flex-wrap items-center justify-between gap-3">
+                                                <div className="flex items-center gap-3">
+                                                    <ShieldIcon />
+                                                    <span className={`${sigmar} text-black text-[26px] leading-none`}>{fmt(amt)}</span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className={`${poppins} text-black/50 text-[12px]`}>Unlocks in</span>
+                                                    <span className={`${sigmar} text-black text-[14px]`}>
+                                                        {t?.days || 0}D:{t?.hours || 0}H:{t?.minutes || 0}M:{t?.seconds || 0}S
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                ) : (
+                                    <div className="flex justify-center items-center h-[90px]">
+                                        <p className={`${poppins} text-black/40 text-[14px]`}>No Locks Found</p>
+                                    </div>
+                                )}
+                            </div>
+                            {userLockedUnlockable > 0 && (
+                                <div className="flex items-center gap-3 mt-5 pt-5 border-t border-[#4100001a]">
+                                    <span className={`${poppins} text-black text-[14px] font-semibold`}>Unlockable</span>
+                                    <ShieldIcon />
+                                    <span className={`${sigmar} text-black text-[20px]`}>{fmt(userLockedUnlockable)}</span>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
-                    {/* Center: Hero Mascot */}
-                    <div className="w-full lg:absolute lg:left-[504px] lg:top-[184px] lg:w-[437px] lg:h-[611px] lg:z-10 flex justify-center lg:block order-1 lg:order-none relative -mt-10 lg:mt-0">
-                        <MascotPlaceholder />
+                    {/* ══════════════ RIGHT COLUMN ══════════════ */}
+                    <div className="w-full lg:w-[520px] shrink-0 lg:sticky lg:top-[160px] self-start">
+                        <div className={`${cardBase} overflow-hidden`}>
+
+                            {/* Heading */}
+                            <div className="px-9 pt-9 pb-8">
+                                <h2 className={`${sigmar} text-black text-[28px] leading-tight`}>Claim your Rewards</h2>
+                            </div>
+
+                            <hr className="border-[#4100001a]" />
+
+                            {/* ── CLAIMABLE REWARDS ── */}
+                            <RewardSection title="Claimable Rewards" hint="Includes SHiELD Locked and Staked">
+                                <div className="flex items-center gap-4 flex-wrap">
+                                    {/* SHiELD */}
+                                    <div className="flex items-center gap-2">
+                                        <ShieldIcon />
+                                        <span className={`${sigmar} text-black text-[30px] leading-none`}>{fmt(claimableShield)}</span>
+                                    </div>
+                                    {/* BNB */}
+                                    <div className="flex items-center gap-2">
+                                        <BnbIcon />
+                                        <span className={`${sigmar} text-black text-[30px] leading-none`}>{fmt(claimableBnb, 5)}</span>
+                                    </div>
+                                    {/* Claim */}
+                                    <button
+                                        className={`${greenBtn} py-[11px] px-7 text-[15px] ml-auto`}
+                                        disabled={(!claimableShield && !claimableBnb) || isClaimLoading}
+                                        onClick={() => { if (!isConnected) { openConnectModal?.(); return; } claimRewards(); }}
+                                    >
+                                        {isClaimLoading && (
+                                            <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                                        )}
+                                        Claim
+                                    </button>
+                                </div>
+                            </RewardSection>
+
+                            <hr className="border-[#4100001a]" />
+
+                            {/* ── SHiELD IN VESTING ── */}
+                            <RewardSection title="SHiELD in Vesting" hint="SHiELD can be claimed with 50% Penalty">
+                                <div className="flex items-center gap-2">
+                                    <ShieldIcon />
+                                    <span className={`${sigmar} text-black text-[30px] leading-none`}>{fmt(earnedBalancesTotal)}</span>
+                                </div>
+                            </RewardSection>
+
+                            <hr className="border-[#4100001a]" />
+
+                            {/* ── CLAIM ALL ── */}
+                            <RewardSection title="Claim All" hint="With penalty if Applicable" noBorder>
+                                <div className="flex items-center gap-4 flex-wrap">
+                                    {/* SHiELD */}
+                                    <div className="flex items-center gap-2">
+                                        <ShieldIcon />
+                                        <span className={`${sigmar} text-black text-[30px] leading-none`}>
+                                            {fmt(withdrawableAmount + claimableShield, 0)}
+                                        </span>
+                                    </div>
+                                    {/* BNB */}
+                                    <div className="flex items-center gap-2">
+                                        <BnbIcon />
+                                        <span className={`${sigmar} text-black text-[30px] leading-none`}>{fmt(claimableBnb, 2)}</span>
+                                    </div>
+                                    {/* Claim */}
+                                    <button
+                                        className={`${greenBtn} py-[11px] px-7 text-[15px] ml-auto`}
+                                        disabled={(withdrawableAmount + claimableShield <= 0) || isEmergencyWithdrawLoading}
+                                        onClick={() => { if (!isConnected) { openConnectModal?.(); return; } emergencyWithdraw(); }}
+                                    >
+                                        {isEmergencyWithdrawLoading && (
+                                            <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
+                                        )}
+                                        Claim
+                                    </button>
+                                </div>
+                            </RewardSection>
+
+                        </div>
                     </div>
 
-                    {/* Right: Total Locked Board */}
-                    <div className="w-full lg:absolute lg:left-[910px] lg:top-[342px] lg:w-[389px] lg:h-[243px] lg:z-20 flex justify-center lg:block order-3 lg:order-none pt-8 lg:pt-0">
-                        <StatsBoard />
-                    </div>
-                </div>
-            </section>
-
-            {/* ── BELOW-HERO CONTENT ── black bg, padded ── */}
-            <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col gap-[31px]">
-
-                {/* Token Cards Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-                    <TokenCard
-                        tokenName="WROR"
-                        price="~ $0.00"
-                        priceWeth="0.00 WETH"
-                        circSupply="0.00"
-                        marketCap="0.00"
-                        isWror={true}
-                        priceLayout="primary"
-                    />
-                    <TokenCard
-                        tokenName="WROR"
-                        priceWeth="0.00 WETH"
-                        priceValue="$0.00"
-                        circSupply="0.00"
-                        marketCap="0.00"
-                        isWror={true}
-                        priceLayout="secondary"
-                    />
-                </div>
-
-                {/* Staking Info Row */}
-                <div className="w-full">
-                    <StakingInfo />
-                </div>
-
-                {/* Footer / Collateral Info */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                    <CollateralCard
-                        value="0.00 %"
-                        label="Collateral Ratio"
-                        lastUpdate="Last Update: 23/06/2022 10:52:02 GMT+3"
-                    />
-                    <CollateralCard
-                        value="0.00 WETH"
-                        label="Collateral Ratio"
-                        lastUpdate="Last Update: 23/06/2022 10:52:02 GMT+3"
-                    />
                 </div>
             </div>
         </div>

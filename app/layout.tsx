@@ -2,6 +2,8 @@ import { Sigmar, Poppins } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "./components/Navigation";
 import type { Metadata } from "next";
+import { Providers } from "./providers";
+import '@rainbow-me/rainbowkit/styles.css';
 
 const sigmar = Sigmar({
     weight: "400",
@@ -17,7 +19,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
     title: "Worrier Finance",
-    description: "Dashboard",
+    description: "Home",
 };
 
 export default function RootLayout({
@@ -28,11 +30,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${sigmar.variable} ${poppins.variable} relative`}>
-                <div className="app-fixed-bg" aria-hidden="true" />
-                <div className="absolute top-0 left-0 w-full z-50">
-                    <Navigation />
-                </div>
-                <div className="relative z-10">{children}</div>
+                <Providers>
+                    <div className="app-fixed-bg" aria-hidden="true" />
+                    <div className="absolute top-0 left-0 w-full z-50">
+                        <Navigation />
+                    </div>
+                    <div className="relative z-10">{children}</div>
+                </Providers>
             </body>
         </html>
     );

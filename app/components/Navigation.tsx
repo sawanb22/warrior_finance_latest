@@ -4,13 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const navItems = [
-    { name: "Dashboard", href: "/dashboard" },
+    { name: "Home", href: "/home" },
     { name: "Mint", href: "/mint" },
     { name: "Redeem", href: "/redeem" },
     { name: "Farms", href: "/farms" },
     { name: "Staking", href: "/staking" },
+    { name: "Lock", href: "/lock" },
+    { name: "Dashboard", href: "/dashboard" },
 ];
 
 export const Navigation = () => {
@@ -76,12 +79,52 @@ export const Navigation = () => {
 
                 {/* RIGHT — Connect Wallet (desktop) */}
                 <div className="ml-auto hidden md:block">
-                    <button
-                        className="flex-shrink-0 flex items-center justify-center rounded-[17px] border-2 border-[#309C04] bg-[#62d732] text-white shadow-[0px_4px_0px_0px_#309C04] font-poppins font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#55c42b] transition-all active:translate-y-1 active:shadow-none"
-                        style={{ width: '150.86px', height: '45.98px' }}
-                    >
-                        Connect Wallet
-                    </button>
+                    <ConnectButton.Custom>
+                        {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
+                            const connected = mounted && account && chain;
+                            return (
+                                <div aria-hidden={!mounted} style={{ opacity: mounted ? 1 : 0, pointerEvents: mounted ? 'auto' : 'none' }}>
+                                    {!connected ? (
+                                        <button
+                                            onClick={openConnectModal}
+                                            className="flex items-center justify-center rounded-[17px] border-2 border-[#309C04] bg-[#62d732] text-white shadow-[0px_4px_0px_0px_#309C04] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#55c42b] transition-all active:translate-y-1 active:shadow-none"
+                                            style={{ width: '150.86px', height: '45.98px' }}
+                                        >
+                                            Connect Wallet
+                                        </button>
+                                    ) : chain.unsupported ? (
+                                        <button
+                                            onClick={openChainModal}
+                                            className="flex items-center justify-center rounded-[17px] border-2 border-[#c03304] bg-[#e84040] text-white shadow-[0px_4px_0px_0px_#c03304] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#d13333] transition-all active:translate-y-1 active:shadow-none"
+                                            style={{ width: '150.86px', height: '45.98px' }}
+                                        >
+                                            Wrong Network
+                                        </button>
+                                    ) : (
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={openChainModal}
+                                                className="flex items-center gap-1 rounded-[17px] border-2 border-[#309C04] bg-[#62d732] text-white shadow-[0px_4px_0px_0px_#309C04] [font-family:var(--font-poppins)] font-bold text-[13px] tracking-[-0.04em] hover:bg-[#55c42b] transition-all active:translate-y-1 active:shadow-none px-3"
+                                                style={{ height: '45.98px' }}
+                                            >
+                                                {chain.hasIcon && chain.iconUrl && (
+                                                    <img src={chain.iconUrl} alt={chain.name} className="w-4 h-4 rounded-full" />
+                                                )}
+                                                <span className="hidden lg:inline">{chain.name}</span>
+                                            </button>
+                                            <button
+                                                onClick={openAccountModal}
+                                                className="flex items-center justify-center rounded-[17px] border-2 border-[#309C04] bg-[#62d732] text-white shadow-[0px_4px_0px_0px_#309C04] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#55c42b] transition-all active:translate-y-1 active:shadow-none px-4"
+                                                style={{ height: '45.98px' }}
+                                            >
+                                                {account.displayName}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        }}
+                    </ConnectButton.Custom>
                 </div>
 
                 {/* Hamburger Button (mobile/tablet) */}
@@ -130,13 +173,55 @@ export const Navigation = () => {
                             </Link>
                         );
                     })}
-                    <button
-                        className="mt-2 flex items-center justify-center rounded-[17px] border-2 border-[#309C04] bg-[#62d732] text-white shadow-[0px_4px_0px_0px_#309C04] font-poppins font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#55c42b] transition-all active:translate-y-1 active:shadow-none w-[160px] h-[46px]"
-                    >
-                        Connect Wallet
-                    </button>
+                    <ConnectButton.Custom>
+                        {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
+                            const connected = mounted && account && chain;
+                            return (
+                                <div aria-hidden={!mounted} style={{ opacity: mounted ? 1 : 0, pointerEvents: mounted ? 'auto' : 'none' }}>
+                                    {!connected ? (
+                                        <button
+                                            onClick={openConnectModal}
+                                            className="mt-2 flex items-center justify-center rounded-[17px] border-2 border-[#309C04] bg-[#62d732] text-white shadow-[0px_4px_0px_0px_#309C04] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#55c42b] transition-all active:translate-y-1 active:shadow-none"
+                                            style={{ width: '160px', height: '46px' }}
+                                        >
+                                            Connect Wallet
+                                        </button>
+                                    ) : chain.unsupported ? (
+                                        <button
+                                            onClick={openChainModal}
+                                            className="mt-2 flex items-center justify-center rounded-[17px] border-2 border-[#c03304] bg-[#e84040] text-white shadow-[0px_4px_0px_0px_#c03304] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#d13333] transition-all active:translate-y-1 active:shadow-none"
+                                            style={{ width: '160px', height: '46px' }}
+                                        >
+                                            Wrong Network
+                                        </button>
+                                    ) : (
+                                        <div className="flex flex-col items-center gap-2 mt-2">
+                                            <button
+                                                onClick={openChainModal}
+                                                className="flex items-center gap-2 rounded-[17px] border-2 border-[#309C04] bg-[#62d732] text-white shadow-[0px_4px_0px_0px_#309C04] [font-family:var(--font-poppins)] font-bold text-[13px] tracking-[-0.04em] hover:bg-[#55c42b] transition-all active:translate-y-1 active:shadow-none px-4"
+                                                style={{ height: '46px', width: '160px' }}
+                                            >
+                                                {chain.hasIcon && chain.iconUrl && (
+                                                    <img src={chain.iconUrl} alt={chain.name} className="w-4 h-4 rounded-full" />
+                                                )}
+                                                {chain.name}
+                                            </button>
+                                            <button
+                                                onClick={openAccountModal}
+                                                className="flex items-center justify-center rounded-[17px] border-2 border-[#309C04] bg-[#62d732] text-white shadow-[0px_4px_0px_0px_#309C04] [font-family:var(--font-poppins)] font-bold text-[14px] leading-[1.02] tracking-[-0.04em] hover:bg-[#55c42b] transition-all active:translate-y-1 active:shadow-none"
+                                                style={{ width: '160px', height: '46px' }}
+                                            >
+                                                {account.displayName}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        }}
+                    </ConnectButton.Custom>
                 </div>
             </div>
         </nav>
     );
 };
+

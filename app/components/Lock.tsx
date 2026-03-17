@@ -4,58 +4,54 @@ import { useAccount } from 'wagmi';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useStakingData } from '../hooks/useStakingData';
 import { useStakingActions } from '../hooks/useStakingActions';
-import { parseUnits, formatUnits } from 'viem';
 
-export const Staking = () => {
-    const [isStakeTab, setIsStakeTab] = useState(true);
+export const Lock = () => {
+    const [isLockTab, setIsLockTab] = useState(true);
     const [inputValue, setInputValue] = useState('');
-    const [withdrawValue, setWithdrawValue] = useState('');
     const { address, isConnected } = useAccount();
     const { openConnectModal } = useConnectModal();
 
     const {
-        stakeApr, userStaked, walletBalance, walletBalanceFormatted,
-        claimableShield, claimableBnb, isLoading, refetch,
+        lockApr, userLockedTotal, userLockedUnlockable,
+        walletBalance, walletBalanceFormatted, isLoading, refetch,
     } = useStakingData();
 
     const {
         allowance, refetchAllowance,
         approve, isApproveLoading, isApproveSuccess,
-        stake, isStakeLoading, isStakeSuccess,
-        withdraw, isWithdrawLoading, isWithdrawSuccess,
+        lock, isLockLoading, isLockSuccess,
+        withdrawExpiredLocks, isWithdrawExpiredLoading, isWithdrawExpiredSuccess,
     } = useStakingActions();
 
     // Refetch data after successful tx
     useEffect(() => {
-        if (isStakeSuccess || isWithdrawSuccess || isApproveSuccess) {
+        if (isLockSuccess || isWithdrawExpiredSuccess || isApproveSuccess) {
             refetch();
             refetchAllowance();
-            if (isStakeSuccess) setInputValue('');
-            if (isWithdrawSuccess) setWithdrawValue('');
+            if (isLockSuccess) setInputValue('');
         }
-    }, [isStakeSuccess, isWithdrawSuccess, isApproveSuccess]);
+    }, [isLockSuccess, isWithdrawExpiredSuccess, isApproveSuccess]);
 
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>, setter: (v: string) => void) => {
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
-        if (/^[0-9]*\.?[0-9]*$/.test(val)) setter(val);
+        if (/^[0-9]*\.?[0-9]*$/.test(val)) setInputValue(val);
     };
 
-    const handlePercentage = (pct: number, balance: number, setter: (v: string) => void) => {
-        const val = (balance * pct / 100);
-        setter(val.toFixed(6));
+    const handlePercentage = (pct: number) => {
+        const val = (walletBalance * pct / 100);
+        setInputValue(val.toFixed(6));
     };
 
     const isApproved = allowance >= parseFloat(inputValue || '0');
     const insufficientFunds = parseFloat(inputValue || '0') > walletBalance;
-    const insufficientWithdraw = parseFloat(withdrawValue || '0') > userStaked;
 
-    // Shared styles
+    // Shared styles — same as staking.tsx for consistency
     const cardBg = "relative bg-[#ffeed6] rounded-[20px] border-2 border-[#381200] shadow-[0px_9px_0px_#65ff00] p-6 sm:p-8 w-full max-w-[500px]";
     const tabActive = "[font-family:var(--font-sigmar)] font-normal text-[22px] text-[#62d732] cursor-pointer";
     const tabInactive = "[font-family:var(--font-sigmar)] font-normal text-[22px] text-black/40 cursor-pointer hover:text-black/60 transition-colors";
     const labelText = "[font-family:var(--font-poppins)] font-semibold text-[14px] text-black/50";
     const valueText = "[font-family:var(--font-sigmar)] font-normal text-[16px] text-black";
-    const greenBtn = "w-full h-[50px] rounded-[17px] bg-[#62d732] text-white [font-family:var(--font-poppins)] font-bold text-[16px] border-2 border-[#309c04] shadow-[0px_4px_0px_0px_#309c04] hover:bg-[#55c42b] active:translate-y-1 active:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2";
+    const orangeBtn = "w-full h-[50px] rounded-[17px] bg-[#62d732] text-white [font-family:var(--font-poppins)] font-bold text-[16px] border-2 border-[#309c04] shadow-[0px_4px_0px_0px_#309c04] hover:bg-[#55c42b] active:translate-y-1 active:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2";
     const pctBtn = "px-3 py-1.5 rounded-[13px] border-2 border-[#381200] bg-[#ffeed6] [font-family:var(--font-sigmar)] font-bold text-[12px] text-black hover:translate-y-0.5 transition-all";
     const maxBtn = "px-4 py-1.5 rounded-[17px] bg-[#62d732] text-white [font-family:var(--font-poppins)] font-bold text-[12px] border-2 border-[#309c04] shadow-[0px_2px_0px_0px_#309c04] hover:bg-[#55c42b] active:translate-y-0.5 active:shadow-none transition-all";
     const inputContainer = "rounded-[17px] border-2 border-[#381200] bg-white shadow-[0px_4px_0px_#381200] p-4 mb-6";
@@ -68,30 +64,30 @@ export const Staking = () => {
                     {/* Tab buttons */}
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-4">
-                            <button onClick={() => setIsStakeTab(true)}
-                                className={isStakeTab ? tabActive : tabInactive}>Stake</button>
-                            <button onClick={() => setIsStakeTab(false)}
-                                className={!isStakeTab ? tabActive : tabInactive}>Withdraw</button>
+                            <button onClick={() => setIsLockTab(true)}
+                                className={isLockTab ? tabActive : tabInactive}>Lock</button>
+                            <button onClick={() => setIsLockTab(false)}
+                                className={!isLockTab ? tabActive : tabInactive}>Withdraw</button>
                         </div>
                         <div className="w-7 h-7 rounded-full border border-black/20 flex items-center justify-center cursor-help group relative">
                             <span className="text-black/40 text-sm font-bold">i</span>
-                            <div className="absolute bottom-full right-0 mb-2 bg-black text-white text-xs rounded-lg px-3 py-2 w-[200px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
-                                Includes staked balance and unlocked vestings.
+                            <div className="absolute bottom-full right-0 mb-2 bg-black text-white text-xs rounded-lg px-3 py-2 w-[220px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
+                                Includes lock balance and unlocked vestings.
                             </div>
                         </div>
                     </div>
 
-                    {isStakeTab ? (
-                        /* ── STAKE TAB ── */
+                    {isLockTab ? (
+                        /* ── LOCK TAB ── */
                         <div>
-                            {/* Total Staked box */}
+                            {/* Total Locked box */}
                             <div className={dataRow}>
-                                <span className={labelText}>Total Staked</span>
+                                <span className={labelText}>Total Locked</span>
                                 <div className="flex items-center gap-2">
                                     <div className="w-[30px] h-[30px] rounded-full bg-[#ffeed6] border border-[#381200] flex items-center justify-center">
                                         <img src="/dashboard-assets/Group 927.svg" alt="logo" className="w-5 h-5" />
                                     </div>
-                                    <span className={valueText}>{userStaked.toFixed(2)}</span>
+                                    <span className={valueText}>{userLockedTotal.toFixed(2)}</span>
                                 </div>
                             </div>
 
@@ -104,7 +100,7 @@ export const Staking = () => {
                                     </div>
                                     <div className="flex flex-col text-[14px] [font-family:var(--font-sigmar)] font-normal text-right leading-[23px] tracking-[2%]">
                                         <span className="text-black">{walletBalance.toFixed(1)} SHiELD</span>
-                                        <span className="text-black">{stakeApr.toFixed(2)}%</span>
+                                        <span className="text-black">{lockApr.toFixed(2)}%</span>
                                     </div>
                                 </div>
                             </div>
@@ -115,20 +111,19 @@ export const Staking = () => {
                                     type="text"
                                     placeholder="0.00"
                                     value={inputValue}
-                                    onChange={(e) => handleInput(e, setInputValue)}
+                                    onChange={handleInput}
                                     className="w-full bg-transparent outline-none text-[24px] text-black [font-family:var(--font-sigmar)] placeholder:text-black/30 mb-3"
                                 />
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         {[10, 25, 50, 75].map(pct => (
                                             <button key={pct} className={pctBtn}
-                                                onClick={() => handlePercentage(pct, walletBalance, setInputValue)}>
+                                                onClick={() => handlePercentage(pct)}>
                                                 {pct}%
                                             </button>
                                         ))}
                                     </div>
-                                    <button className={maxBtn}
-                                        onClick={() => handlePercentage(100, walletBalance, setInputValue)}>
+                                    <button className={maxBtn} onClick={() => handlePercentage(100)}>
                                         Max
                                     </button>
                                 </div>
@@ -136,36 +131,36 @@ export const Staking = () => {
 
                             {/* Action button */}
                             {!isConnected ? (
-                                <button className={greenBtn} onClick={openConnectModal}>
+                                <button className={orangeBtn} onClick={openConnectModal}>
                                     Connect wallet
                                 </button>
                             ) : !isApproved ? (
-                                <button className={greenBtn} onClick={approve} disabled={isApproveLoading}>
+                                <button className={orangeBtn} onClick={approve} disabled={isApproveLoading}>
                                     {isApproveLoading && <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />}
                                     Approve SHiELD
                                 </button>
                             ) : insufficientFunds ? (
-                                <button className={greenBtn} disabled>Insufficient Fund</button>
+                                <button className={orangeBtn} disabled>Insufficient Fund</button>
                             ) : (
-                                <button className={greenBtn}
-                                    disabled={!parseFloat(inputValue) || isStakeLoading}
-                                    onClick={() => stake(inputValue)}>
-                                    {isStakeLoading && <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />}
-                                    Stake
+                                <button className={orangeBtn}
+                                    disabled={!parseFloat(inputValue) || isLockLoading}
+                                    onClick={() => lock(inputValue)}>
+                                    {isLockLoading && <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />}
+                                    Lock
                                 </button>
                             )}
                         </div>
                     ) : (
                         /* ── WITHDRAW TAB ── */
                         <div>
-                            {/* Total Withdraw box */}
+                            {/* Expired Locks box */}
                             <div className={dataRow}>
-                                <span className={labelText}>Total Withdraw</span>
+                                <span className={labelText}>Total Expired Locks</span>
                                 <div className="flex items-center gap-2">
                                     <div className="w-[30px] h-[30px] rounded-full bg-[#ffeed6] border border-[#381200] flex items-center justify-center">
                                         <img src="/dashboard-assets/Group 927.svg" alt="logo" className="w-5 h-5" />
                                     </div>
-                                    <span className={valueText}>{userStaked.toFixed(2)}</span>
+                                    <span className={valueText}>{userLockedUnlockable.toFixed(2)}</span>
                                 </div>
                             </div>
 
@@ -178,49 +173,22 @@ export const Staking = () => {
                                     </div>
                                     <div className="flex flex-col text-[14px] [font-family:var(--font-sigmar)] font-normal text-right leading-[23px] tracking-[2%]">
                                         <span className="text-black">{walletBalance.toFixed(1)} SHiELD</span>
-                                        <span className="text-black">{stakeApr.toFixed(2)}%</span>
+                                        <span className="text-black">{lockApr.toFixed(2)}%</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Input + percentage buttons */}
-                            <div className={inputContainer}>
-                                <input
-                                    type="text"
-                                    placeholder="0.00"
-                                    value={withdrawValue}
-                                    onChange={(e) => handleInput(e, setWithdrawValue)}
-                                    className="w-full bg-transparent outline-none text-[24px] text-black [font-family:var(--font-sigmar)] placeholder:text-black/30 mb-3"
-                                />
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                        {[10, 25, 50, 75].map(pct => (
-                                            <button key={pct} className={pctBtn}
-                                                onClick={() => handlePercentage(pct, userStaked, setWithdrawValue)}>
-                                                {pct}%
-                                            </button>
-                                        ))}
-                                    </div>
-                                    <button className={maxBtn}
-                                        onClick={() => handlePercentage(100, userStaked, setWithdrawValue)}>
-                                        Max
-                                    </button>
-                                </div>
-                            </div>
-
-                            {/* Withdraw button */}
+                            {/* Withdraw expired locks button (no input needed — shield calls withdrawExpiredLocks() directly) */}
                             {!isConnected ? (
-                                <button className={greenBtn} onClick={openConnectModal}>
+                                <button className={orangeBtn} onClick={openConnectModal}>
                                     Connect wallet
                                 </button>
-                            ) : insufficientWithdraw ? (
-                                <button className={greenBtn} disabled>Insufficient Balance</button>
                             ) : (
-                                <button className={greenBtn}
-                                    disabled={!parseFloat(withdrawValue) || isWithdrawLoading}
-                                    onClick={() => withdraw(withdrawValue)}>
-                                    {isWithdrawLoading && <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />}
-                                    Withdraw
+                                <button className={orangeBtn}
+                                    disabled={isWithdrawExpiredLoading || userLockedUnlockable <= 0}
+                                    onClick={withdrawExpiredLocks}>
+                                    {isWithdrawExpiredLoading && <span className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full" />}
+                                    Withdraw Expired Locks
                                 </button>
                             )}
                         </div>
