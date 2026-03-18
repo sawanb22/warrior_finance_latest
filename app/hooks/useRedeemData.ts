@@ -1,6 +1,7 @@
 "use client";
+import { useState } from 'react';
 import { useReadContract, useBalance, useAccount } from 'wagmi';
-import { formatUnits } from 'viem';
+import { formatUnits, parseUnits } from 'viem';
 import addresses from '../constants/contractAddresses.json';
 import WETHX_PTN_POOL_ABI from '../constants/WETHX_PTN_POOL_ABI.json';
 import WETHX_PTN_MASTER_ORACLE_ABI from '../constants/WETHX_PTN_MASTER_ORACLE_ABI.json';
@@ -92,6 +93,24 @@ export const useRedeemData = (selectedToken: string) => {
         query: { enabled: !!address },
     });
 
+    // ── calcRedeem() on-chain read (mirrors shield's Radeem.js) ──
+    const [calcRedeemInput, setCalcRedeemInput] = useState<string>('0');
+    const { data: calcRedeemResult } = useReadContract({
+        address: poolAddr,
+        abi: WETHX_PTN_POOL_ABI as any,
+        functionName: 'calcRedeem',
+        args: [parseUnits(calcRedeemInput || '0', 18)],
+        query: { enabled: parseFloat(calcRedeemInput || '0') > 0 },
+    });
+
+    // calcRedeem returns (ethAmount, shieldAmount)
+    const calcRedeemEth = calcRedeemResult 
+        ? Number(formatUnits((calcRedeemResult as any)[0] as bigint, 18))
+        : 0;
+    const calcRedeemShield = calcRedeemResult
+        ? Number(formatUnits((calcRedeemResult as any)[1] as bigint, 18))
+        : 0;
+
     // ── Shield price from oracle ──
     const { data: shieldPriceRate } = useReadContract({
         address: config.masterOracle as `0x${string}`,
@@ -135,5 +154,9 @@ export const useRedeemData = (selectedToken: string) => {
         refetchAllowance,
         refetchUserInfo,
         config,
+        // calcRedeem on-chain
+        setCalcRedeemInput,
+        calcRedeemEth,
+        calcRedeemShield,
     };
 };

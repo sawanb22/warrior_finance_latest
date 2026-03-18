@@ -14,12 +14,15 @@ export const Home = () => {
         shieldPrice,
         bnbxPrice,
         guardxPrice,
+        andyxPrice,
         shieldCircSupply,
         bnbxCircSupply,
         guardxCircSupply,
+        andyxCircSupply,
         shieldMarketCap,
         bnbxMarketCap,
         guardxMarketCap,
+        andyxMarketCap,
         collRatio,
         twap,
         isError,
@@ -27,7 +30,8 @@ export const Home = () => {
     } = useProtocolData();
 
     // Format helper for large numbers
-    const formatSupply = (n: number) => {
+    const formatSupply = (n: number, forceM: boolean = false) => {
+        if (forceM) return n.toFixed(2) + 'M';
         if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B';
         if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M';
         if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K';
@@ -128,7 +132,7 @@ export const Home = () => {
                                 tokenName: "BNBX",
                                 price: `$${bnbxPrice.toFixed(2)}`,
                                 priceWeth: `${bnbPrice > 0 ? (bnbxPrice / bnbPrice).toFixed(6) : '0.000000'} WBNB`,
-                                circSupply: formatSupply(bnbxCircSupply),
+                                circSupply: formatSupply(bnbxCircSupply, true),
                                 marketCap: formatMarketCap(bnbxMarketCap),
                                 logoSrc: "/icons/bnb.png",
                                 buyLink: "https://pancakeswap.finance/swap?outputCurrency=0xcF4a682545FaBE24551101820022fF66A016207d&chain=bsc",
@@ -140,13 +144,25 @@ export const Home = () => {
                                 tokenName: "GUARDX",
                                 price: `$${guardxPrice.toFixed(4)}`, // typically needs more decimals
                                 priceWeth: `${bnbPrice > 0 ? (guardxPrice / bnbPrice).toFixed(6) : '0.000000'} WBNB`,
-                                circSupply: formatSupply(guardxCircSupply),
+                                circSupply: formatSupply(guardxCircSupply, true),
                                 marketCap: formatMarketCap(guardxMarketCap),
                                 logoSrc: "/icons/guard.png",
                                 buyLink: "https://pancakeswap.finance/swap?outputCurrency=0xFAFeA5aC4D58c39540c188e7DEc59C4a9fA8b8Cf&chain=bsc",
                                 contractLink: "https://bscscan.com/address/0xFAFeA5aC4D58c39540c188e7DEc59C4a9fA8b8Cf#code",
                                 symbol: "GUARDX",
                                 address: "0xFAFeA5aC4D58c39540c188e7DEc59C4a9fA8b8Cf"
+                            },
+                            {
+                                tokenName: "ANDYX",
+                                price: `$${andyxPrice.toFixed(4)}`,
+                                priceWeth: `${bnbPrice > 0 ? (andyxPrice / bnbPrice).toFixed(6) : '0.000000'} WBNB`,
+                                circSupply: formatSupply(andyxCircSupply, true),
+                                marketCap: formatMarketCap(andyxMarketCap),
+                                logoSrc: "/icons/andy.png", // Assuming an andyx icon exists, otherwise fallback
+                                buyLink: "https://pancakeswap.finance/swap?outputCurrency=0xBfe801aa35fBA4719E9379A4b4850afA5c09E668&chain=bsc",
+                                contractLink: "https://bscscan.com/address/0xBfe801aa35fBA4719E9379A4b4850afA5c09E668#code",
+                                symbol: "ANDYX",
+                                address: "0xBfe801aa35fBA4719E9379A4b4850afA5c09E668"
                             }
                         ]}
                     />

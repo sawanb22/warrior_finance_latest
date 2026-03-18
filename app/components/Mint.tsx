@@ -23,7 +23,7 @@ export const Mint = () => {
         mintFee, isMintPaused, inputBalance, inputBalanceFormatted,
         xBalance, xBalanceFormatted, allowance, pendingCollect,
         collectBlock, refetchAllowance, refetchUserInfo, config,
-        xTokenAddress,
+        xTokenAddress, setCalcMintInput, calcMintOutput,
     } = useMintData(selectedToken);
 
     const {
@@ -33,15 +33,22 @@ export const Mint = () => {
         isTxSuccess,
     } = useMintActions();
 
-    // Recalculate output when input changes (mirrors shield: calcMint / fee cut)
+    // Use on-chain calcMint result instead of simple math
     useEffect(() => {
         if (inputValue && parseFloat(inputValue) > 0) {
-            const afterFee = parseFloat(inputValue) - parseFloat(inputValue) * (mintFee / 100);
-            setOutputValue(afterFee > 0 ? afterFee.toFixed(4) : "0.0");
+            setCalcMintInput(inputValue);
+        } else {
+            setCalcMintInput('0');
+        }
+    }, [inputValue, setCalcMintInput]);
+
+    useEffect(() => {
+        if (calcMintOutput > 0 && inputValue) {
+            setOutputValue(calcMintOutput.toFixed(4));
         } else {
             setOutputValue("");
         }
-    }, [inputValue, mintFee]);
+    }, [calcMintOutput, inputValue]);
 
     // Refetch after successful transaction
     useEffect(() => {

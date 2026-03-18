@@ -1,4 +1,5 @@
 "use client";
+import { useState } from 'react';
 import { useReadContract, useBalance, useAccount } from 'wagmi';
 import { formatUnits, parseUnits } from 'viem';
 import addresses from '../constants/contractAddresses.json';
@@ -76,6 +77,20 @@ export const useMintData = (selectedToken: string) => {
         query: { enabled: !!address },
     });
 
+    // ── calcMint() on-chain read (mirrors shield's Mint.js) ──
+    // Returns the precise output amount from the pool contract for a given input
+    const [calcMintInput, setCalcMintInput] = useState<string>('0');
+    const { data: calcMintResult } = useReadContract({
+        address: poolAddr,
+        abi: WETHX_PTN_POOL_ABI as any,
+        functionName: 'calcMint',
+        args: [parseUnits(calcMintInput || '0', 18)],
+        query: { enabled: parseFloat(calcMintInput || '0') > 0 },
+    });
+    const calcMintOutput = calcMintResult
+        ? Number(formatUnits((calcMintResult as any)[0] as bigint, 18))
+        : 0;
+
     // Parse values
     const mintFee = poolInfo ? Number((poolInfo as any)[2]) / 1e4 : 0; // shield: poolInfo[2] / 10e3
     const isMintPaused = poolInfo ? Boolean((poolInfo as any)[4]) : false;
@@ -107,5 +122,8 @@ export const useMintData = (selectedToken: string) => {
         refetchAllowance,
         refetchUserInfo,
         config,
+        // calcMint on-chain
+        setCalcMintInput,
+        calcMintOutput,
     };
 };

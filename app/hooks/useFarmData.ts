@@ -61,6 +61,14 @@ export const useFarmData = (poolIndex: number) => {
         query: { enabled: !!address && !!lpTokenAddr },
     });
 
+    // Total number of pools
+    const { data: poolLengthRaw } = useReadContract({
+        address: CHEF,
+        abi: POTION_DAO_CHEF_ABI as any,
+        functionName: 'poolLength',
+    });
+    const poolLength = poolLengthRaw ? Number(poolLengthRaw) : 0;
+
     const deposited = userInfo ? Number(formatUnits(BigInt((userInfo as any)[0]?.toString() || '0'), 18)) : 0;
     const pending = pendingReward ? Number(formatUnits(pendingReward as bigint, 18)) : 0;
     const walletLpBalance = lpBalance ? parseFloat(lpBalance.formatted) : 0;
@@ -80,6 +88,7 @@ export const useFarmData = (poolIndex: number) => {
         walletLpBalance,
         walletLpFormatted,
         allowance,
+        poolLength,
         refetch,
         refetchAllowance,
     };

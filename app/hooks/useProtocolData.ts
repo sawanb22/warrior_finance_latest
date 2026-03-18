@@ -53,6 +53,10 @@ export const useProtocolData = () => {
             { address: addresses.GUARDX as `0x${string}`, abi: TOKEN_ABI, functionName: 'totalSupply' },
             // [18] GUARDX spot price from BNB_GUARD_ORACLE
             { address: addresses.BNB_GUARD_ORACLE as `0x${string}`, abi: IUniswapOracle, functionName: 'spot', args: [addresses.GUARD, BigInt("1000000000000000000")] },
+            // [19] ANDYX ERC20 totalSupply → ANDYX circulating supply
+            { address: addresses.ANDYX as `0x${string}`, abi: TOKEN_ABI, functionName: 'totalSupply' },
+            // [20] ANDY spot price from ANDY_BNB_ORACLE
+            { address: addresses.ANDY_BNB_ORACLE as `0x${string}`, abi: IUniswapOracle, functionName: 'spot', args: [addresses.ANDY_TOKEN, BigInt("1000000000000000000")] },
         ]
     });
 
@@ -115,12 +119,21 @@ export const useProtocolData = () => {
         guardxPrice = spotRaw * bnbPrice;
     }
 
+    // ANDYX price: spot price from Oracle × bnbPrice
+    let andyxPrice = 0;
+    if (data?.[20]?.result && bnbPrice) {
+        // spot price is returned with 1e18 precision
+        const spotRaw = new BigNumber((data[20].result as bigint).toString()).div(1e18).toNumber();
+        andyxPrice = spotRaw * bnbPrice;
+    }
+
     // ═══════════════════════════════════════
     // CIRCULATING SUPPLY (ERC20 totalSupply)
     // ═══════════════════════════════════════
     const shieldCircSupply = data?.[11]?.result ? Number(formatUnits(data[11].result as bigint, 18)) : 0;
     const bnbxCircSupply = data?.[12]?.result ? Number(formatUnits(data[12].result as bigint, 18)) : 0;
     const guardxCircSupply = data?.[17]?.result ? Number(formatUnits(data[17].result as bigint, 18)) : 0;
+    const andyxCircSupply = data?.[19]?.result ? Number(formatUnits(data[19].result as bigint, 18)) : 0;
 
     // ═══════════════════════════════════════
     // MARKET CAP
@@ -128,6 +141,7 @@ export const useProtocolData = () => {
     const shieldMarketCap = shieldPrice * shieldCircSupply;
     const bnbxMarketCap = bnbxPrice * bnbxCircSupply;
     const guardxMarketCap = guardxPrice * guardxCircSupply;
+    const andyxMarketCap = andyxPrice * andyxCircSupply;
 
     // ═══════════════════════════════════════
     // STAKING APR  (mirrors shield getApr / getLockerApr)
@@ -209,10 +223,10 @@ export const useProtocolData = () => {
     const totalLockedValue = Math.round(stakedUsd + lockedUsd + lockedP1 + lockedP2 + poolLockedValue + 50000);
 
     // ═══════════════════════════════════════
-    // COLLATERAL RATIO (6-decimal precision: 1000000 = 100%)
+    // COLLATERAL RATIO (4-decimal precision: 10000 = 100%)
     // ═══════════════════════════════════════
     const poolInfo = data?.[7]?.result as any;
-    const collRatio = poolInfo ? Number(poolInfo[0]) / 1e6 : 0;
+    const collRatio = poolInfo ? Number(poolInfo[0]) / 1e4 : 0;
 
     // ═══════════════════════════════════════
     // TWAP
@@ -250,14 +264,17 @@ export const useProtocolData = () => {
         shieldPrice,
         bnbxPrice,
         guardxPrice,
+        andyxPrice,
         // Circulating supply (ERC20 totalSupply)
         shieldCircSupply,
         bnbxCircSupply,
         guardxCircSupply,
+        andyxCircSupply,
         // Market caps
         shieldMarketCap,
         bnbxMarketCap,
         guardxMarketCap,
+        andyxMarketCap,
         // Staking APRs
         stakingApr,
         lockApr,

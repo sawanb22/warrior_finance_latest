@@ -149,7 +149,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({
 
                         {/* Dropdown Menu */}
                         {isDropdownOpen && hasOptions && (
-                            <div className="absolute top-full left-0 mt-2 w-[220px] bg-[#FFEED6] border-2 border-[#381200] rounded-[16px] overflow-hidden z-30 shadow-[0px_4px_0px_#381200]">
+                            <div className="absolute top-full left-[2px] mt-2 w-[220px] bg-[#FFEED6] border border-black rounded-[16px] overflow-hidden z-30">
                                 {options.map((opt, idx) => (
                                     <div
                                         key={opt.tokenName}

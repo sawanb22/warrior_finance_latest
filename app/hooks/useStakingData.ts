@@ -33,7 +33,11 @@ export const useStakingData = () => {
             { address: STAKING, abi: POTION_DAO_STAKING_ABI as any, functionName: 'totalSupply' },
             // [5] lockedSupply (total locked in contract)
             { address: STAKING, abi: POTION_DAO_STAKING_ABI as any, functionName: 'lockedSupply' },
-            // [6] unlockedBalance(user)
+            // [6] rewardData(SHIELD)
+            { address: STAKING, abi: POTION_DAO_STAKING_ABI as any, functionName: 'rewardData', args: [addresses.SHIELD_TOKEN as `0x${string}`] },
+            // [7] rewardData(BNBX)
+            { address: STAKING, abi: POTION_DAO_STAKING_ABI as any, functionName: 'rewardData', args: [addresses.WETHX as `0x${string}`] },
+            // [8] unlockedBalance(user)
             ...(address ? [{ address: STAKING, abi: POTION_DAO_STAKING_ABI as any, functionName: 'unlockedBalance' as const, args: [address] }] : []),
             // [7] lockedBalances(user)
             ...(address ? [{ address: STAKING, abi: POTION_DAO_STAKING_ABI as any, functionName: 'lockedBalances' as const, args: [address] }] : []),
@@ -94,8 +98,12 @@ export const useStakingData = () => {
     const totalLockedRaw = data?.[5]?.result as bigint | undefined;
     const totalLockedRawNum = totalLockedRaw ? Number(formatUnits(totalLockedRaw, 18)) : 0;
 
-    // User-specific data (indices shift by 6 when address is present)
-    const baseIdx = 6;
+    // missing rewardData parses
+    const rewardDataShieldRate = data?.[6]?.result ? Number(formatUnits((data[6].result as any)[1], 18)) : 0;
+    const rewardDataBnbxRate = data?.[7]?.result ? Number(formatUnits((data[7].result as any)[1], 18)) : 0;
+
+    // User-specific data (indices shift by 8 when address is present)
+    const baseIdx = 8;
 
     // unlockedBalance → user's staked amount (withdrawable)
     const unlockedBalanceRaw = address && data?.[baseIdx]?.result
@@ -200,6 +208,8 @@ export const useStakingData = () => {
         lockedBalancesEntries,
         unclaimedVesting,
         // Meta
+        rewardDataShieldRate,
+        rewardDataBnbxRate,
         isLoading,
         refetch,
     };

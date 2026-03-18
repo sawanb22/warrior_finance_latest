@@ -22,10 +22,10 @@ export const Redeem = () => {
 
     const {
         redeemFee, isRedeemPaused, collateralBalance,
-        xBalance, xBalanceFormatted, allowance,
-        pendingShield, pendingEth, collectBlock,
-        refetchAllowance, refetchUserInfo, config,
+        xBalance, xBalanceFormatted, allowance, pendingShield, pendingEth,
+        collectBlock, refetchAllowance, refetchUserInfo, config,
         xTokenAddress, yTokenAddress,
+        setCalcRedeemInput, calcRedeemEth, calcRedeemShield,
     } = useRedeemData(selectedToken);
 
     const {
@@ -35,18 +35,24 @@ export const Redeem = () => {
         isTxSuccess,
     } = useRedeemActions();
 
-    // Recalculate outputs when input changes (mirrors shield: fee-cut based calc)
+    // Use on-chain calcRedeem result instead of simple math
     useEffect(() => {
         if (xTokenInput && parseFloat(xTokenInput) > 0) {
-            const afterFee = parseFloat(xTokenInput) - parseFloat(xTokenInput) * (redeemFee / 100);
-            setEthOutput(afterFee > 0 ? afterFee.toFixed(4) : "0.0");
-            // Shield output placeholder — the actual split comes from calcRedeem on-chain
-            setShieldOutput("0.0");
+            setCalcRedeemInput(xTokenInput);
+        } else {
+            setCalcRedeemInput('0');
+        }
+    }, [xTokenInput, setCalcRedeemInput]);
+
+    useEffect(() => {
+        if (xTokenInput && parseFloat(xTokenInput) > 0) {
+            setEthOutput(calcRedeemEth > 0 ? calcRedeemEth.toFixed(4) : "0.0");
+            setShieldOutput(calcRedeemShield > 0 ? calcRedeemShield.toFixed(4) : "0.0");
         } else {
             setEthOutput("");
             setShieldOutput("");
         }
-    }, [xTokenInput, redeemFee]);
+    }, [calcRedeemEth, calcRedeemShield, xTokenInput]);
 
     // Refetch after successful transaction
     useEffect(() => {
